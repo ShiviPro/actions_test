@@ -35,7 +35,7 @@ jobs:
         env:
           GIT_USERNAME: Tanmay000009
           GIT_EMAIL: Tanmay000009-action@github.com
-          DEPLOY_URL: https://github.com/Tanmay000009/actions_test
+          DEPLOY_URL: github.com/Tanmay000009/actions_test
         run: |-
           git diff
           git clone https://.:${{ secrets.GITHUB_TOKEN }}@github.com/Tanmay000009/actions_test
