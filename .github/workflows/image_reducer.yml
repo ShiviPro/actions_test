@@ -1,0 +1,41 @@
+name: Image Compresser
+on:
+  pull_request:
+    types: [closed]
+    branches:
+      - main
+      - master
+    paths:
+      - "**.jpg"
+      - "**.jpeg"
+      - "**.png"
+      - "**.webp"
+
+jobs:
+  build:
+    name: calibreapp/image-actions
+    runs-on: ubuntu-latest
+    permissions:
+      actions: write
+      contents: write
+      pull-requests: read
+    if: ${{ github.event.pull_request.merged }}
+    steps:
+      - name: Checkout Branch
+        uses: actions/checkout@v2
+
+      - name: Compress Images
+        id: calibre
+        uses: calibreapp/image-actions@main
+        with:
+          githubToken: ${{ secrets.GITHUB_TOKEN }}
+          compressOnly: true
+
+      - name: Commit and push if changes
+        run: |-
+          git diff
+          git config --global user.email "Tanmay000009@users.noreply.github.com"
+          git config --global user.name "Tanmay"
+          git add .
+          git commit -m "Image optimized"
+          git push
